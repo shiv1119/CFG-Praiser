@@ -1,0 +1,53 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-xl font-semibold mb-4">Enter Grammar and Words</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="mb-4">
+            <label for="terminals" class="block text-sm font-medium text-gray-700">Terminals</label>
+            <textarea id="terminals" name="terminals" rows="3" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"></textarea>
+            <p class="mt-2 text-sm text-gray-500">Enter terminals (alphabet) separated by spaces.</p>
+        </div>
+
+        <div class="mb-4">
+            <label for="non_terminals" class="block text-sm font-medium text-gray-700">Non-Terminals</label>
+            <textarea id="non_terminals" name="non_terminals" rows="3" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"></textarea>
+            <p class="mt-2 text-sm text-gray-500">Enter non-terminals separated by spaces.</p>
+        </div>
+
+        <div class="mb-4">
+            <label for="rules" class="block text-sm font-medium text-gray-700">Rules</label>
+            <textarea id="rules" name="rules" rows="6" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"></textarea>
+            <p class="mt-2 text-sm text-gray-500">Enter rules in the format: A->B (one rule per line).</p>
+        </div>
+
+        <div class="mb-4">
+            <label for="words" class="block text-sm font-medium text-gray-700">Words</label>
+            <textarea id="words" name="words" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"></textarea>
+            <p class="mt-2 text-sm text-gray-500">Enter words to check, each on a new line.</p>
+        </div>
+
+        <button type="submit" class="w-full py-2 px-4 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
+            Check Grammar
+        </button>
+    </form>
+    
+    {% if results %}
+        <div class="mt-6">
+            <h3 class="text-lg font-semibold">Results:</h3>
+            <ul class="mt-4 space-y-2">
+                {% for result in results %}
+                    <li class="p-4 bg-gray-100 rounded-md">
+                        <p class="text-sm">{{ result }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
